@@ -1,0 +1,26 @@
+<form class="card" *ngIf="form; else loadingBlock" [formGroup]="form" (ngSubmit)="updatePost()">
+  <h2>Update post</h2>
+
+  <!--  <div class="alert alert-danger" *ngIf="authService.error$ | async as error">-->
+  <!--    {{error}}-->
+  <!--  </div>-->
+
+  <div class="form-control" [class.invalid]="form.get('title').invalid && form.get('title').touched">
+    <label for="title">Title</label>
+    <input type="text" id="title" formControlName="title">
+    <div class="validation" *ngIf="form.get('title').invalid && form.get('title').touched">
+      <small *ngIf="form.get('title').errors.required">Must not to be empty!</small>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <label>Content</label>
+    <quill-editor formControlName="content"></quill-editor>
+  </div>
+
+  <button type="submit" class="btn btn-block btn-dark" [disabled]="form.invalid || isDisabledButton">Update post</button>
+</form>
+
+<ng-template #loadingBlock>
+  <p class="text-center">Loading...</p>
+</ng-template>
